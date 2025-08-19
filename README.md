@@ -40,8 +40,8 @@ Follow these steps to get the project running locally.
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone https://github.com/benksih/mytodo.git
+cd mytodo
 ```
 
 ### 2. Backend Setup
