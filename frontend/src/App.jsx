@@ -26,18 +26,18 @@ function AuthProvider({ children }) {
       navigate('/dashboard');
     } catch (error) {
       console.error('Login failed', error);
-      alert('Login failed!');
+      alert('登录失败！');
     }
   };
 
   const register = async (email, password) => {
     try {
       await api.register({ email, password });
-      alert('Registration successful! Please log in.');
+      alert('注册成功！请登录。');
       navigate('/login');
     } catch (error) {
       console.error('Registration failed', error);
-      alert('Registration failed!');
+      alert('注册失败！');
     }
   };
 
@@ -64,10 +64,10 @@ const LoginPage = () => {
     return (
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <h2>Login</h2>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-          <button type="submit">Login</button>
+          <h2>登录</h2>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="邮箱" required />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="密码" required />
+          <button type="submit">登录</button>
         </form>
       </div>
     );
@@ -84,10 +84,10 @@ const RegisterPage = () => {
     return (
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <h2>Register</h2>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
-          <button type="submit">Register</button>
+          <h2>注册</h2>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="邮箱" required />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="密码" required />
+          <button type="submit">注册</button>
         </form>
       </div>
     );
@@ -105,7 +105,7 @@ const DashboardPage = () => {
                 const { data } = await api.getTasks();
                 setTasks(data);
             } catch (error) {
-                console.error("Failed to fetch tasks", error);
+                console.error("获取任务失败", error);
             }
         };
         fetchTasks();
@@ -120,21 +120,21 @@ const DashboardPage = () => {
             setTasks([...tasks, data]);
             setTitle('');
         } catch (error) {
-            console.error("Failed to create task", error);
+            console.error("创建任务失败", error);
         }
     };
 
     return (
         <div className="container">
-            <h2>Dashboard</h2>
-            <button onClick={logout}>Logout</button>
+            <h2>仪表盘</h2>
+            <button onClick={logout}>退出登录</button>
             <form onSubmit={handleAddTask}>
-                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="New Task Title" />
-                <button type="submit">Add Task</button>
+                <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="新任务标题" />
+                <button type="submit">添加任务</button>
             </form>
             <ul>
                 {tasks.map(task => (
-                    <li key={task.id}>{task.title} - {task.completed ? "Completed" : "Pending"}</li>
+                    <li key={task.id}>{task.title} - {task.completed ? "已完成" : "待处理"}</li>
                 ))}
             </ul>
         </div>
