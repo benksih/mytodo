@@ -34,12 +34,18 @@
   }
 }
 
-body {
+html, body, #root {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Prevent scrollbars on the root elements */
+}
+
+body {
   background-color: var(--background-color);
   color: var(--text-color);
 }
-
 * {
   box-sizing: border-box;
 }

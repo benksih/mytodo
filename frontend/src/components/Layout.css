@@ -1,7 +1,7 @@
 .app-layout {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
 }
@@ -10,7 +10,6 @@
   flex-grow: 1;
   padding: 2rem;
   overflow-y: auto; /* Allow content to scroll */
-  height: 100vh;
 }
 
 /* Responsive Design */
