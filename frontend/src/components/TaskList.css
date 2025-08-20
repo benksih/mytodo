@@ -1,0 +1,14 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-color-muted);
+  background-color: var(--sidebar-background);
+  border-radius: 8px;
+  border: 1px dashed var(--border-color);
+}

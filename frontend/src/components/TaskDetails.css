@@ -1,0 +1,125 @@
+.task-details-container {
+  padding-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem 2rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: var(--text-color-muted);
+  margin-bottom: 0.25rem;
+}
+
+.detail-value {
+  font-weight: 500;
+}
+
+.subtask-section {
+  grid-column: 1 / -1; /* Span full width */
+  margin-top: 1rem;
+}
+
+.subtask-section h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+}
+
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  background-color: var(--background-color);
+  border-radius: 6px;
+}
+
+.no-subtasks {
+  font-size: 0.9rem;
+  color: var(--text-color-muted);
+}
+
+.task-actions {
+  grid-column: 1 / -1; /* Span full width */
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.task-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.task-actions button:hover {
+  background-color: var(--nav-item-hover-background);
+}
+
+.task-actions .delete-button {
+  border-color: #e03131;
+  color: #e03131;
+}
+
+.task-actions .delete-button:hover {
+  background-color: #fff5f5;
+  border-color: #c92a2a;
+}
+
+/* Edit Mode Styles */
+.edit-mode .detail-item {
+  flex-direction: column;
+}
+
+.edit-mode .detail-label {
+  margin-bottom: 0.5rem;
+}
+
+.edit-mode .full-width {
+    grid-column: 1 / -1;
+}
+
+.detail-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.detail-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(51, 154, 240, 0.2);
+}
+
+.task-actions .save-button {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: white;
+}
+.task-actions .save-button:hover {
+  background-color: #1c7ed6;
+  border-color: #1c7ed6;
+}
