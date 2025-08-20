@@ -10,38 +10,56 @@ router.use(authenticateToken);
 
 // Create a new task
 router.post('/', async (req, res) => {
-  const { title, dueDate, reminderTime, points } = req.body;
+  const { title, points, dueDate, reminderTime, priority, categoryId, parentId } = req.body;
   const authorId = req.user.userId;
 
-  if (!title || !dueDate || !reminderTime || points == null) {
-    return res.status(400).json({ error: 'Title, dueDate, reminderTime, and points are required' });
+  if (!title || points == null) {
+    return res.status(400).json({ error: 'Title and points are required' });
   }
 
   try {
     const task = await prisma.task.create({
       data: {
         title,
-        dueDate: new Date(dueDate),
-        reminderTime: new Date(reminderTime),
         points,
         authorId,
+        dueDate: dueDate ? new Date(dueDate) : null,
+        reminderTime: reminderTime ? new Date(reminderTime) : null,
+        priority,
+        categoryId,
+        parentId,
       },
+      include: {
+        category: true,
+        subTasks: true,
+      }
     });
     res.status(201).json(task);
   } catch (error) {
+    console.error("Task creation error:", error);
     res.status(500).json({ error: 'Internal server error while creating task' });
   }
 });
 
-// Get all tasks for the logged-in user
+// Get all top-level tasks for the logged-in user
 router.get('/', async (req, res) => {
   const authorId = req.user.userId;
   try {
     const tasks = await prisma.task.findMany({
-      where: { authorId },
+      where: { authorId, parentId: null },
+      include: {
+        category: true,
+        subTasks: { // You can even nest includes
+          include: {
+            category: true
+          }
+        },
+      },
+      orderBy: { createdAt: 'desc' },
     });
     res.json(tasks);
   } catch (error) {
+    console.error("Fetch tasks error:", error);
     res.status(500).json({ error: 'Internal server error while fetching tasks' });
   }
 });
@@ -49,7 +67,8 @@ router.get('/', async (req, res) => {
 // Update a task
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, dueDate, reminderTime, points, completed } = req.body;
+  // Destructure all possible fields from the body
+  const { title, points, completed, dueDate, reminderTime, priority, categoryId } = req.body;
   const authorId = req.user.userId;
 
   try {
@@ -58,6 +77,16 @@ router.put('/:id', async (req, res) => {
     if (!task || task.authorId !== authorId) {
       return res.status(404).json({ error: 'Task not found or you do not have permission to edit it' });
     }
+
+    const dataToUpdate = {};
+    if (title !== undefined) dataToUpdate.title = title;
+    if (points !== undefined) dataToUpdate.points = points;
+    if (completed !== undefined) dataToUpdate.completed = completed;
+    if (dueDate !== undefined) dataToUpdate.dueDate = dueDate ? new Date(dueDate) : null;
+    if (reminderTime !== undefined) dataToUpdate.reminderTime = reminderTime ? new Date(reminderTime) : null;
+    if (priority !== undefined) dataToUpdate.priority = priority;
+    if (categoryId !== undefined) dataToUpdate.categoryId = categoryId;
+
 
     // If task is being marked as complete for the first time
     if (completed && !task.completed) {
@@ -69,7 +98,7 @@ router.put('/:id', async (req, res) => {
         }),
         prisma.task.update({
           where: { id: parseInt(id) },
-          data: { title, dueDate: new Date(dueDate), reminderTime: new Date(reminderTime), points, completed },
+          data: dataToUpdate,
         }),
       ]);
       res.json(updatedTask);
@@ -77,11 +106,12 @@ router.put('/:id', async (req, res) => {
       // Just update the task without changing the score
       const updatedTask = await prisma.task.update({
         where: { id: parseInt(id) },
-        data: { title, dueDate: new Date(dueDate), reminderTime: new Date(reminderTime), points, completed },
+        data: dataToUpdate,
       });
       res.json(updatedTask);
     }
   } catch (error) {
+    console.error("Update task error:", error);
     res.status(500).json({ error: 'Internal server error while updating task' });
   }
 });

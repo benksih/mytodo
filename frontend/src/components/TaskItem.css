@@ -1,0 +1,89 @@
+.task-item {
+  background-color: var(--sidebar-background);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  transition: box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.task-item.completed .task-item-title p {
+  text-decoration: line-through;
+  color: var(--text-color-muted);
+}
+
+.task-item-main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+}
+
+.task-item-checkbox-wrapper input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+}
+
+.task-item-title {
+  flex-grow: 1;
+}
+
+.task-item-title p {
+  margin: 0;
+  font-weight: 500;
+}
+
+.task-item-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+}
+
+.task-priority {
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* Priority Colors */
+.priority-low { background-color: #e7f5ff; color: #339af0; }
+.priority-medium { background-color: #fff9e6; color: #fab005; }
+.priority-high { background-color: #fff0f6; color: #f06595; }
+
+.task-due-date {
+  color: var(--text-color-muted);
+}
+
+.task-item-expand-icon {
+  color: var(--text-color-muted);
+  transition: transform 0.3s ease;
+}
+
+.task-item-details {
+  padding: 0 1rem 1rem 3.5rem; /* Align with title */
+  border-top: 1px solid var(--border-color);
+  animation: fadeIn 0.5s ease;
+  color: var(--text-color-muted);
+}
+
+.task-item-details h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.task-item-details ul {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

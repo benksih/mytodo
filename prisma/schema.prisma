@@ -16,6 +16,17 @@ model User {
   password   String
   totalScore Int      @default(0)
   tasks      Task[]
+  categories Category[]
+}
+
+model Category {
+  id     Int    @id @default(autoincrement())
+  name   String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+  tasks  Task[]
+
+  @@unique([name, userId])
 }
 
 model Task {
@@ -24,9 +35,19 @@ model Task {
   completed    Boolean  @default(false)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  dueDate      DateTime
-  reminderTime DateTime
+  dueDate      DateTime?
+  reminderTime DateTime?
   points       Int
-  author       User     @relation(fields: [authorId], references: [id])
-  authorId     Int
+  priority     String?  // e.g., "High", "Medium", "Low"
+
+  author   User @relation(fields: [authorId], references: [id])
+  authorId Int
+
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId Int?
+
+  // Self-relation for sub-tasks
+  parentId Int?
+  parent   Task?  @relation("TaskSubtasks", fields: [parentId], references: [id], onDelete: Cascade)
+  subTasks Task[] @relation("TaskSubtasks")
 }
