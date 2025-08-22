@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as api from '../services/api';
 import './TaskDetails.css';
 
-const TaskDetails = ({ task, onTaskUpdate, onTaskDelete }) => {
+const TaskDetails = ({ task, onTaskUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
 
@@ -15,19 +15,6 @@ const TaskDetails = ({ task, onTaskUpdate, onTaskDelete }) => {
       // categoryId will be handled later
     });
   }, [task, isEditing]);
-
-
-  const handleDelete = async () => {
-    if (window.confirm(`你确定要删除任务 "${task.title}" 吗？这个操作无法撤销。`)) {
-      try {
-        await api.deleteTask(task.id);
-        onTaskDelete(task.id);
-      } catch (error) {
-        console.error("Failed to delete task", error);
-        alert("删除任务失败！");
-      }
-    }
-  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -125,7 +112,6 @@ const TaskDetails = ({ task, onTaskUpdate, onTaskDelete }) => {
 
       <div className="task-actions">
           <button className="edit-button" onClick={() => setIsEditing(true)}>编辑</button>
-          <button className="delete-button" onClick={handleDelete}>删除任务</button>
       </div>
     </div>
   );

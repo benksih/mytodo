@@ -9,10 +9,11 @@ const TaskList = ({ tasks, onTaskUpdate, onTaskDelete }) => {
 
   return (
     <div className="task-list">
-      {tasks.map(task => (
+      {tasks.map((task, index) => (
         <TaskItem
           key={task.id}
           task={task}
+          index={index}
           onTaskUpdate={onTaskUpdate}
           onTaskDelete={onTaskDelete}
         />

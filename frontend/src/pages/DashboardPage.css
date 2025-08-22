@@ -46,9 +46,12 @@
   font-size: 1.5rem;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .add-task-form button:hover {
   background-color: #1c7ed6; /* A slightly darker accent color */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }

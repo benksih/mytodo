@@ -30,14 +30,29 @@
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
+  position: relative;
 }
 
 .form-group label {
-  font-size: 0.9rem;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  color: var(--text-color-muted);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* Floating label effect */
+.form-input:focus + label,
+.form-input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-100%) scale(0.8);
+  background-color: var(--sidebar-background);
+  padding: 0 0.25rem;
   font-weight: 500;
-  margin-bottom: 0.5rem;
+  color: var(--accent-color);
 }
 
 .form-input {
@@ -65,12 +80,15 @@
   background-color: var(--accent-color);
   color: white;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
   margin-top: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .auth-button:hover {
   background-color: #1c7ed6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
 }
 
 .auth-footer {

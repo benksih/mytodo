@@ -17,28 +17,28 @@ const RegisterPage = () => {
       <AuthLayout title="创建您的账户">
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email">邮箱地址</label>
             <input
               id="email"
               type="email"
               className="form-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
+              placeholder=" "
               required
             />
+            <label htmlFor="email">邮箱地址</label>
           </div>
           <div className="form-group">
-            <label htmlFor="password">密码</label>
             <input
               id="password"
               type="password"
               className="form-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder=" "
               required
             />
+            <label htmlFor="password">密码</label>
           </div>
           <button type="submit" className="auth-button">注册</button>
         </form>

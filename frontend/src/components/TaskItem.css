@@ -2,16 +2,40 @@
   background-color: var(--sidebar-background);
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  transition: box-shadow 0.2s ease;
+  transition: all 0.2s ease;
+  animation: animate-in 0.4s ease;
+  animation-fill-mode: both;
 }
 
 .task-item:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
 .task-item.completed .task-item-title p {
-  text-decoration: line-through;
   color: var(--text-color-muted);
+}
+
+.task-item-title p {
+  position: relative;
+  transition: color 0.4s ease;
+}
+
+.task-item-title p::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--text-color-muted);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.task-item.completed .task-item-title p::after {
+  transform: scaleX(1);
 }
 
 .task-item-main {
@@ -65,10 +89,28 @@
   transition: transform 0.3s ease;
 }
 
+.task-item.is-expanded .task-item-expand-icon {
+    transform: rotate(180deg);
+}
+
+.task-details-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s ease-out;
+}
+
+.task-item.is-expanded .task-details-wrapper {
+  grid-template-rows: 1fr;
+}
+
+/* We need to wrap the details in another div to hide the overflow */
+.task-details-wrapper > div {
+    overflow: hidden;
+}
+
 .task-item-details {
-  padding: 0 1rem 1rem 3.5rem; /* Align with title */
+  padding: 1rem 1rem 1rem 3.5rem; /* Add top padding */
   border-top: 1px solid var(--border-color);
-  animation: fadeIn 0.5s ease;
   color: var(--text-color-muted);
 }
 
@@ -86,4 +128,54 @@
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@keyframes animate-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes animate-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.task-item.exiting {
+  animation: animate-out 0.3s ease forwards;
+}
+
+.delete-task-button {
+  background: none;
+  border: none;
+  color: var(--text-color-muted);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  line-height: 1;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.task-item:hover .delete-task-button {
+  opacity: 1;
+  visibility: visible;
+}
+
+.delete-task-button:hover {
+  background-color: #fce8e6;
+  color: #c92a2a;
 }

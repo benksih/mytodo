@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Typed from 'typed.js';
 import { useAuth } from '../context/AuthContext';
 import * as api from '../services/api';
 import TaskList from '../components/TaskList';
@@ -7,7 +8,24 @@ import './DashboardPage.css';
 const DashboardPage = () => {
     const [tasks, setTasks] = useState([]);
     const [title, setTitle] = useState('');
-    // Add other fields as needed, e.g., dueDate, points
+    const typedEl = useRef(null);
+
+    // Typed.js effect for the header
+    useEffect(() => {
+        const typed = new Typed(typedEl.current, {
+            strings: ['我的任务', '今天做什么？', '保持专注。'],
+            typeSpeed: 50,
+            backSpeed: 30,
+            backDelay: 1500,
+            loop: true,
+            smartBackspace: true,
+        });
+
+        return () => {
+            // Destroy Typed instance during cleanup to prevent memory leaks
+            typed.destroy();
+        };
+    }, []);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -46,7 +64,7 @@ const DashboardPage = () => {
     return (
         <div className="dashboard-page">
             <header className="dashboard-header">
-                <h1>我的任务</h1>
+                <h1><span ref={typedEl} /></h1>
                 <form onSubmit={handleAddTask} className="add-task-form">
                     <input
                         value={title}
